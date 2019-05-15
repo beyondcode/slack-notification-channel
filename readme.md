@@ -7,6 +7,20 @@
 
 This is the Laravel Slack notification channel, but instead of using incoming webhooks, this channel makes use of OAuth access tokens.
 
+### Usage
+
+Install the package via composer:
+
+```
+composer require beyondcode/slack-notification-channel
+```
+
+The service provider gets registered automatically and you can use this package as a replacement of the core Laravel Slack notification channel.
+
+### Notification Routing
+
+Since this notification channel makes use of Slack API tokens instead of incoming webhook URLs, you need to return an array containing the API 
+
 ### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.

@@ -52,7 +52,7 @@ class SlackApiChannel
         }
 
         $this->token = $config['token'];
-        $this->channel = $config['channel'];
+        $this->channel = $config['channel'] ?? null;
 
         return $this->http->post(self::API_ENDPOINT, $this->buildJsonPayload(
             $notification->toSlack($notifiable)
