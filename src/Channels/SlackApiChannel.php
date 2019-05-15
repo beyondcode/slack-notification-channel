@@ -108,6 +108,7 @@ class SlackApiChannel
                 'author_link' => $attachment->authorLink,
                 'author_name' => $attachment->authorName,
                 'color' => $attachment->color ?: $message->color(),
+                'callback_id' => $attachment->callback_id,
                 'fallback' => $attachment->fallback,
                 'fields' => $this->fields($attachment),
                 'footer' => $attachment->footer,

@@ -51,6 +51,13 @@ class SlackAttachment
     public $color;
 
     /**
+     * The attachment's callback id.
+     *
+     * @var string
+     */
+    public $callbackId;
+
+    /**
      * The attachment's fields.
      *
      * @var array
@@ -190,6 +197,19 @@ class SlackAttachment
     public function color($color)
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Set the color of the attachment.
+     *
+     * @param  string  $callbackId
+     * @return $this
+     */
+    public function callbackId($callbackId)
+    {
+        $this->callbackId = $callbackId;
 
         return $this;
     }
