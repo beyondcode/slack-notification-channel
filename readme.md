@@ -19,7 +19,18 @@ The service provider gets registered automatically and you can use this package 
 
 ### Notification Routing
 
-Since this notification channel makes use of Slack API tokens instead of incoming webhook URLs, you need to return an array containing the API 
+Since this notification channel makes use of Slack API tokens instead of incoming webhook URLs, you need to return an array containing the API token and an optional channel. 
+This channel will be used, if it is not provided in the `SlackMessage` that you send:
+
+```php
+public function routeNotificationForSlack()
+{
+    return [
+        'token' => 'xoxp-slack-token',
+        'channel' => '#general'
+    ];
+}
+```
 
 ### Changelog
 
