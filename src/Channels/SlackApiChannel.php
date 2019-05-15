@@ -22,6 +22,9 @@ class SlackApiChannel
     /** @var string */
     protected $token;
 
+    /** @var string */
+    protected $channel;
+
     /**
      * Create a new Slack channel instance.
      *
@@ -44,11 +47,12 @@ class SlackApiChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        if (! $token = $notifiable->routeNotificationFor('slack', $notification)) {
+        if (! $config = $notifiable->routeNotificationFor('slack', $notification)) {
             return;
         }
 
-        $this->token = $token;
+        $this->token = $config['token'];
+        $this->channel = $config['channel'];
 
         return $this->http->post(self::API_ENDPOINT, $this->buildJsonPayload(
             $notification->toSlack($notifiable)
@@ -64,7 +68,7 @@ class SlackApiChannel
     protected function buildJsonPayload(SlackMessage $message)
     {
         $optionalFields = array_filter([
-            'channel' => data_get($message, 'channel'),
+            'channel' => data_get($message, 'channel', $this->channel),
             'icon_emoji' => data_get($message, 'icon'),
             'icon_url' => data_get($message, 'image'),
             'link_names' => data_get($message, 'linkNames'),
