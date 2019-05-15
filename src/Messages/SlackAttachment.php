@@ -290,6 +290,32 @@ class SlackAttachment
         return $this;
     }
 
+    public function button($title, $name, $value, $style = '')
+    {
+        $this->actions[] = [
+            'type' => 'button',
+            'text' => $title,
+            'name' => $name,
+            'value' => $value,
+            'style' => $style,
+        ];
+
+        return $this;
+    }
+
+    public function select($title, $name, array $options, $style = '')
+    {
+        $this->actions[] = [
+            'type' => 'select',
+            'text' => $title,
+            'name' => $name,
+            'options' => $options,
+            'style' => $style,
+        ];
+
+        return $this;
+    }
+
     /**
      * Set the author of the attachment.
      *
