@@ -2,6 +2,7 @@
 
 namespace BeyondCode\SlackNotificationChannel\Messages;
 
+use Closure;
 use Illuminate\Support\InteractsWithTime;
 
 class SlackAttachment
@@ -63,6 +64,13 @@ class SlackAttachment
      * @var array
      */
     public $fields;
+
+    /**
+     * The attachment's blocks.
+     *
+     * @var array
+     */
+    public $blocks;
 
     /**
      * The fields containing markdown.
@@ -388,6 +396,33 @@ class SlackAttachment
     public function timestamp($timestamp)
     {
         $this->timestamp = $this->availableAt($timestamp);
+
+        return $this;
+    }
+
+    /**
+     * Add a block to the attachment.
+     *
+     * @param  \Closure  $callback
+     * @return $this
+     */
+    public function block(Closure $callback)
+    {
+        $this->blocks[] = $block = new SlackAttachmentBlock;
+
+        $callback($block);
+
+        return $this;
+    }
+
+    /**
+     * Add a divider block to the attachment.
+     *
+     * @return $this
+     */
+    public function dividerBlock()
+    {
+        $this->blocks[] = new SlackAttachmentDividerBlock;
 
         return $this;
     }

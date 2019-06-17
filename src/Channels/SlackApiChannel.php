@@ -2,6 +2,7 @@
 
 namespace BeyondCode\SlackNotificationChannel\Channels;
 
+use BeyondCode\SlackNotificationChannel\Messages\SlackAttachmentBlock;
 use GuzzleHttp\Client as HttpClient;
 use Illuminate\Notifications\Notification;
 use BeyondCode\SlackNotificationChannel\Messages\SlackMessage;
@@ -107,6 +108,7 @@ class SlackApiChannel
                 'author_icon' => $attachment->authorIcon,
                 'author_link' => $attachment->authorLink,
                 'author_name' => $attachment->authorName,
+                'blocks' => $this->blocks($attachment),
                 'color' => $attachment->color ?: $message->color(),
                 'callback_id' => $attachment->callbackId,
                 'fallback' => $attachment->fallback,
@@ -139,6 +141,19 @@ class SlackApiChannel
             }
 
             return ['title' => $key, 'value' => $value, 'short' => true];
+        })->values()->all();
+    }
+
+    /**
+     * Format the attachment's blocks.
+     *
+     * @param  \BeyondCode\SlackNotificationChannel\Messages\SlackAttachment $attachment
+     * @return array
+     */
+    protected function blocks(SlackAttachment $attachment)
+    {
+        return collect($attachment->blocks)->map(function ($value) {
+            return $value->toArray();
         })->values()->all();
     }
 }
