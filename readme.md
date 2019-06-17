@@ -7,6 +7,11 @@
 
 This is the Laravel Slack notification channel, but instead of using incoming webhooks, this channel makes use of OAuth access tokens.
 
+
+[![https://phppackagedevelopment.com](https://beyondco.de/courses/phppd.jpg)](https://phppackagedevelopment.com)
+
+If you want to learn how to create reusable PHP packages yourself, take a look at my upcoming [PHP Package Development](https://phppackagedevelopment.com) video course.
+
 ### Usage
 
 Install the package via composer:
