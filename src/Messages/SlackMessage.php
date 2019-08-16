@@ -6,6 +6,7 @@ use Closure;
 
 class SlackMessage
 {
+
     /**
      * The "level" of the notification (info, success, warning, error).
      *
@@ -82,6 +83,13 @@ class SlackMessage
      * @var array
      */
     public $http = [];
+
+    /**
+     * The attachment's threadTimestamp.
+     *
+     * @var string
+     */
+    public $threadTimestamp;
 
     /**
      * Indicate that the notification gives information about an operation.
@@ -267,6 +275,19 @@ class SlackMessage
     public function http(array $options)
     {
         $this->http = $options;
+
+        return $this;
+    }
+
+    /**
+     * Set the threadTimestamp.
+     *
+     * @param  \DateTimeInterface|\DateInterval|int  $threadTimestamp
+     * @return $this
+     */
+    public function threadTimestamp($threadTimestamp)
+    {
+        $this->threadTimestamp = $threadTimestamp;
 
         return $this;
     }

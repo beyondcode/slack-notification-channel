@@ -55,9 +55,15 @@ class SlackApiChannel
         $this->token = $config['token'];
         $this->channel = $config['channel'] ?? null;
 
-        return $this->http->post(self::API_ENDPOINT, $this->buildJsonPayload(
+        $response = $this->http->post(self::API_ENDPOINT, $this->buildJsonPayload(
             $notification->toSlack($notifiable)
         ));
+
+        if(method_exists($notification, 'response')){
+            return $notification->response($response);
+        }
+
+        return $response;
     }
 
     /**
@@ -76,6 +82,7 @@ class SlackApiChannel
             'unfurl_links' => data_get($message, 'unfurlLinks'),
             'unfurl_media' => data_get($message, 'unfurlMedia'),
             'username' => data_get($message, 'username'),
+            'thread_ts' => data_get($message, 'threadTimestamp'),
         ]);
 
         $payload = [
