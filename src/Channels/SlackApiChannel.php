@@ -83,6 +83,7 @@ class SlackApiChannel
             'unfurl_media' => data_get($message, 'unfurlMedia'),
             'username' => data_get($message, 'username'),
             'thread_ts' => data_get($message, 'threadTimestamp'),
+            'reply_broadcast' => data_get($message, 'threadBroadcast')
         ]);
 
         $payload = [
