@@ -23,7 +23,7 @@ class SlackApiChannelTest extends TestCase
      */
     private $guzzleHttp;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
