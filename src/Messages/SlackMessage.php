@@ -92,6 +92,13 @@ class SlackMessage
     public $threadTimestamp;
 
     /**
+     * Broadcasts the thread reply
+     *
+     * @var bool
+     */
+    public $threadBroadcast = false;
+
+    /**
      * Indicate that the notification gives information about an operation.
      *
      * @return $this
@@ -288,6 +295,19 @@ class SlackMessage
     public function threadTimestamp($threadTimestamp)
     {
         $this->threadTimestamp = $threadTimestamp;
+
+        return $this;
+    }
+
+    /**
+     * Set the thread to Broadcast
+     *
+     * @param bool $threadBroadcast
+     * @return $this
+     */
+    public function threadBroadcast($threadBroadcast = true)
+    {
+        $this->threadBroadcast = $threadBroadcast;
 
         return $this;
     }
