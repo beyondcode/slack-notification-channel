@@ -76,7 +76,7 @@ class SlackApiChannel
     {
         $optionalFields = array_filter([
             'channel' => data_get($message, 'channel', $this->channel),
-            'as_user' => data_get($message, 'as_user'),
+            'as_user' => data_get($message, 'asUser'),
             'icon_emoji' => data_get($message, 'icon'),
             'icon_url' => data_get($message, 'image'),
             'link_names' => data_get($message, 'linkNames'),
