@@ -15,6 +15,13 @@ class SlackMessage
     public $level = 'info';
 
     /**
+     * Whether to post the message as the authed user, instead of as a bot.
+     *
+     * @var bool
+     */
+    public $asUser;
+
+    /**
      * The username to send the message from.
      *
      * @var string|null
@@ -160,6 +167,19 @@ class SlackMessage
         if (! is_null($icon)) {
             $this->icon = $icon;
         }
+
+        return $this;
+    }
+
+    /**
+     * Whether to post the message as the authed user, instead of as a bot.
+     *
+     * @param  bool   $asUser
+     * @return $this
+     */
+    public function asUser($asUser)
+    {
+        $this->asUser = $asUser;
 
         return $this;
     }

@@ -56,6 +56,7 @@ class SlackApiChannelTest extends TestCase
     {
         return [
             'payloadWithIcon' => $this->getPayloadWithIcon(),
+            'payloadWithAsUser' => $this->getPayloadWithAsUser(),
             'payloadWithImageIcon' => $this->getPayloadWithImageIcon(),
             'payloadWithDefaultChannel' => $this->getPayloadWithDefaultChannel(),
             'payloadWithoutOptionalFields' => $this->getPayloadWithoutOptionalFields(),
@@ -99,6 +100,24 @@ class SlackApiChannelTest extends TestCase
                             'ts' => 1234567890,
                         ],
                     ],
+                ],
+            ],
+        ];
+    }
+
+    private function getPayloadWithAsUser()
+    {
+        return [
+            new NotificationSlackChannelWithAsUser,
+            [
+                'headers' => [
+                    'Content-type' => 'application/json',
+                    'Authorization' => 'Bearer xoxp-token',
+                ],
+                'json' => [
+                    'channel' => '#general',
+                    'text' => 'Content',
+                    'as_user' => true,
                 ],
             ],
         ];
@@ -284,6 +303,16 @@ class NotificationSlackChannelTestNotification extends Notification
                     ->author('Author', 'https://laravel.com/fake_author', 'https://laravel.com/fake_author.png')
                     ->timestamp($timestamp);
             });
+    }
+}
+
+class NotificationSlackChannelWithAsUser extends Notification
+{
+    public function toSlack($notifiable)
+    {
+        return (new SlackMessage)
+            ->asUser(true)
+            ->content('Content');
     }
 }
 
