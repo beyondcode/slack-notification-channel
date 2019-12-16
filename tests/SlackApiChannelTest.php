@@ -118,6 +118,7 @@ class SlackApiChannelTest extends TestCase
                     'channel' => '#general',
                     'text' => 'Content',
                     'as_user' => true,
+                    'attachments' => [],
                 ],
             ],
         ];
