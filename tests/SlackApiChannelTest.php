@@ -32,7 +32,7 @@ class SlackApiChannelTest extends TestCase
         $this->slackChannel = new SlackApiChannel($this->guzzleHttp);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
