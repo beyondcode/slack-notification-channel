@@ -32,7 +32,7 @@ class SlackApiChannelTest extends TestCase
         $this->slackChannel = new SlackApiChannel($this->guzzleHttp);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -61,6 +61,23 @@ class SlackApiChannelTest extends TestCase
             'payloadWithoutOptionalFields' => $this->getPayloadWithoutOptionalFields(),
             'payloadWithAttachmentFieldBuilder' => $this->getPayloadWithAttachmentFieldBuilder(),
         ];
+    }
+
+    /** @test */
+    public function testCustomSlackDriverName()
+    {
+        SlackApiChannel::channelDriverName('slackApi');
+
+        $payload = $this->getPayloadWithIcon();
+
+        $this->guzzleHttp->shouldReceive('post')->andReturnUsing(function ($argUrl, $argPayload) use ($payload) {
+            $this->assertEquals($argUrl, 'https://slack.com/api/chat.postMessage');
+        });
+
+        $this->slackChannel->send(
+            new NotificationSlackApiChannelTestNotifiable,
+            new NotificationSlackApiChannelTestNotification()
+        );
     }
 
     private function getPayloadWithIcon()
@@ -259,6 +276,19 @@ class NotificationSlackChannelTestNotifiable
             'channel' => '#general'
         ];
     }
+
+    public function routeNotificationForSlackApi()
+    {
+        return $this->routeNotificationForSlack();
+    }
+}
+
+class NotificationSlackApiChannelTestNotifiable extends NotificationSlackChannelTestNotifiable
+{
+    public function routeNotificationForSlackApi()
+    {
+        return parent::routeNotificationForSlack();
+    }
 }
 
 class NotificationSlackChannelTestNotification extends Notification
@@ -284,6 +314,13 @@ class NotificationSlackChannelTestNotification extends Notification
                     ->author('Author', 'https://laravel.com/fake_author', 'https://laravel.com/fake_author.png')
                     ->timestamp($timestamp);
             });
+    }
+}
+
+class NotificationSlackApiChannelTestNotification extends NotificationSlackChannelTestNotification
+{
+    public function toSlackApi($notifiable) {
+        return parent::toSlack($notifiable);
     }
 }
 
