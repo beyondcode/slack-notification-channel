@@ -26,6 +26,9 @@ class SlackApiChannel
     /** @var string */
     protected $channel;
 
+    /** @var string */
+    protected static $channelDriverName = 'slack';
+
     /**
      * Create a new Slack channel instance.
      *
@@ -39,6 +42,11 @@ class SlackApiChannel
         $this->token = null;
     }
 
+    public static function channelDriverName(string $channelDriverName)
+    {
+        self::$channelDriverName = $channelDriverName;
+    }
+
     /**
      * Send the given notification.
      *
@@ -48,16 +56,23 @@ class SlackApiChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        if (! $config = $notifiable->routeNotificationFor('slack', $notification)) {
+        if (! $config = $notifiable->routeNotificationFor(self::$channelDriverName, $notification)) {
             return;
         }
 
         $this->token = $config['token'];
         $this->channel = $config['channel'] ?? null;
 
-        $response = $this->http->post(self::API_ENDPOINT, $this->buildJsonPayload(
-            $notification->toSlack($notifiable)
-        ));
+
+        $methodName = 'to' . ucfirst(self::$channelDriverName);
+
+        $response = $this->http->post(
+            self::API_ENDPOINT,
+            $this->buildJsonPayload(
+
+                $notification->$methodName($notifiable)
+            )
+        );
 
         if(method_exists($notification, 'response')){
             return $notification->response($response);

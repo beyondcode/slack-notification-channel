@@ -1,7 +1,7 @@
 # Laravel Slack API Token Notification Channel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/beyondcode/slack-notification-channel.svg?style=flat-square)](https://packagist.org/packages/beyondcode/slack-notification-channel)
-[![Build Status](https://img.shields.io/travis/beyondcode/slack-notification-channel/master.svg?style=flat-square)](https://travis-ci.org/beyondcode/slack-notification-channel)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/beyondcode/slack-notification-channel/run-tests?label=tests)
 [![Quality Score](https://img.shields.io/scrutinizer/g/beyondcode/slack-notification-channel.svg?style=flat-square)](https://scrutinizer-ci.com/g/beyondcode/slack-notification-channel)
 [![Total Downloads](https://img.shields.io/packagist/dt/beyondcode/slack-notification-channel.svg?style=flat-square)](https://packagist.org/packages/beyondcode/slack-notification-channel)
 
@@ -75,6 +75,28 @@ public function toSlack($notifiable)
 }
 ```
 
+## Customizing the channel name
+
+Laravel ships with a slack notification channel which uses web hooks. This packages overwrites that default slack channel.
+ 
+ Should you want to use Laravel's default Slack channel and this one inside one app, you'll need to use a different channel name. 
+ 
+ You can set the channel name using
+ 
+ ```php
+SlackApiChannel::$channelName = 'alternativeSlackChannel'
+```
+
+Make sure you use the right method name on your notifications.
+
+```php
+class AlternativeSlackChannelNameNotification extends Notification
+{
+    public function toAlternativeSlackChannel($notifiable) {
+        // ...
+    }
+}
+```
  
 
 ### Changelog

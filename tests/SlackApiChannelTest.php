@@ -64,6 +64,23 @@ class SlackApiChannelTest extends TestCase
         ];
     }
 
+    /** @test */
+    public function testCustomSlackDriverName()
+    {
+        SlackApiChannel::channelDriverName('slackApi');
+
+        $payload = $this->getPayloadWithIcon();
+
+        $this->guzzleHttp->shouldReceive('post')->andReturnUsing(function ($argUrl, $argPayload) use ($payload) {
+            $this->assertEquals($argUrl, 'https://slack.com/api/chat.postMessage');
+        });
+
+        $this->slackChannel->send(
+            new NotificationSlackApiChannelTestNotifiable,
+            new NotificationSlackApiChannelTestNotification()
+        );
+    }
+
     private function getPayloadWithIcon()
     {
         return [
@@ -279,6 +296,19 @@ class NotificationSlackChannelTestNotifiable
             'channel' => '#general'
         ];
     }
+
+    public function routeNotificationForSlackApi()
+    {
+        return $this->routeNotificationForSlack();
+    }
+}
+
+class NotificationSlackApiChannelTestNotifiable extends NotificationSlackChannelTestNotifiable
+{
+    public function routeNotificationForSlackApi()
+    {
+        return parent::routeNotificationForSlack();
+    }
 }
 
 class NotificationSlackChannelTestNotification extends Notification
@@ -314,6 +344,13 @@ class NotificationSlackChannelWithAsUser extends Notification
         return (new SlackMessage)
             ->asUser(true)
             ->content('Content');
+    }
+}
+
+class NotificationSlackApiChannelTestNotification extends NotificationSlackChannelTestNotification
+{
+    public function toSlackApi($notifiable) {
+        return parent::toSlack($notifiable);
     }
 }
 
