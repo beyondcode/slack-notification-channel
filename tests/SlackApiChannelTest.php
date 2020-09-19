@@ -2,6 +2,7 @@
 
 namespace BeyondCode\SlackNotificationChannel\Tests;
 
+use GuzzleHttp\Psr7\Response;
 use Mockery as m;
 use GuzzleHttp\Client;
 use Illuminate\Support\Carbon;
@@ -47,6 +48,8 @@ class SlackApiChannelTest extends TestCase
         $this->guzzleHttp->shouldReceive('post')->andReturnUsing(function ($argUrl, $argPayload) use ($payload) {
             $this->assertEquals($argUrl, 'https://slack.com/api/chat.postMessage');
             $this->assertEquals($argPayload, $payload);
+
+            return new Response(200, [], json_encode($payload));
         });
 
         $this->slackChannel->send(new NotificationSlackChannelTestNotifiable, $notification);
@@ -72,6 +75,8 @@ class SlackApiChannelTest extends TestCase
 
         $this->guzzleHttp->shouldReceive('post')->andReturnUsing(function ($argUrl, $argPayload) use ($payload) {
             $this->assertEquals($argUrl, 'https://slack.com/api/chat.postMessage');
+
+            return new Response(200, [], json_encode($payload));
         });
 
         $this->slackChannel->send(
