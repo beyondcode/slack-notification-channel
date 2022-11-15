@@ -110,7 +110,7 @@ class SlackApiChannel
 
 
         $payload['headers'] = [
-            'Content-type' => 'application/json',
+            'Content-type' => 'application/json; charset=UTF-8',
             'Authorization' => 'Bearer '.$this->token,
         ];
 
