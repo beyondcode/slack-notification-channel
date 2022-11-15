@@ -91,7 +91,7 @@ class SlackApiChannelTest extends TestCase
             new NotificationSlackChannelTestNotification,
             [
                 'headers' => [
-                    'Content-type' => 'application/json',
+                    'Content-type' => 'application/json; charset=UTF-8',
                     'Authorization' => 'Bearer xoxp-token',
                 ],
                 'json' => [
@@ -132,7 +132,7 @@ class SlackApiChannelTest extends TestCase
             new NotificationSlackChannelTestNotificationWithImageIcon,
             [
                 'headers' => [
-                    'Content-type' => 'application/json',
+                    'Content-type' => 'application/json; charset=UTF-8',
                     'Authorization' => 'Bearer xoxp-token',
                 ],
                 'json' => [
