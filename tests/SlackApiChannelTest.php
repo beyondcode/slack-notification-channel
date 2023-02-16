@@ -55,14 +55,14 @@ class SlackApiChannelTest extends TestCase
         $this->slackChannel->send(new NotificationSlackChannelTestNotifiable, $notification);
     }
 
-    public function payloadDataProvider()
+    public static function payloadDataProvider()
     {
         return [
-            'payloadWithIcon' => $this->getPayloadWithIcon(),
-            'payloadWithImageIcon' => $this->getPayloadWithImageIcon(),
-            'payloadWithDefaultChannel' => $this->getPayloadWithDefaultChannel(),
-            'payloadWithoutOptionalFields' => $this->getPayloadWithoutOptionalFields(),
-            'payloadWithAttachmentFieldBuilder' => $this->getPayloadWithAttachmentFieldBuilder(),
+            'payloadWithIcon' => self::getPayloadWithIcon(),
+            'payloadWithImageIcon' => self::getPayloadWithImageIcon(),
+            'payloadWithDefaultChannel' => self::getPayloadWithDefaultChannel(),
+            'payloadWithoutOptionalFields' => self::getPayloadWithoutOptionalFields(),
+            'payloadWithAttachmentFieldBuilder' => self::getPayloadWithAttachmentFieldBuilder(),
         ];
     }
 
@@ -85,7 +85,7 @@ class SlackApiChannelTest extends TestCase
         );
     }
 
-    private function getPayloadWithIcon()
+    private static function getPayloadWithIcon()
     {
         return [
             new NotificationSlackChannelTestNotification,
@@ -126,7 +126,7 @@ class SlackApiChannelTest extends TestCase
         ];
     }
 
-    private function getPayloadWithImageIcon()
+    private static function getPayloadWithImageIcon()
     {
         return [
             new NotificationSlackChannelTestNotificationWithImageIcon,
@@ -164,7 +164,7 @@ class SlackApiChannelTest extends TestCase
         ];
     }
 
-    private function getPayloadWithDefaultChannel()
+    private static function getPayloadWithDefaultChannel()
     {
         return [
             new NotificationSlackChannelTestNotificationWithDefaultChannel,
@@ -202,7 +202,7 @@ class SlackApiChannelTest extends TestCase
         ];
     }
 
-    private function getPayloadWithoutOptionalFields()
+    private static function getPayloadWithoutOptionalFields()
     {
         return [
             new NotificationSlackChannelWithoutOptionalFieldsTestNotification,
@@ -233,7 +233,7 @@ class SlackApiChannelTest extends TestCase
         ];
     }
 
-    public function getPayloadWithAttachmentFieldBuilder()
+    public static function getPayloadWithAttachmentFieldBuilder()
     {
         return [
             new NotificationSlackChannelWithAttachmentFieldBuilderTestNotification,
