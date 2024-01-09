@@ -289,7 +289,7 @@ class SlackMessage
     /**
      * Set the threadTimestamp.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $threadTimestamp
+     * @param  \DateTimeInterface|\DateInterval|string  $threadTimestamp
      * @return $this
      */
     public function threadTimestamp($threadTimestamp)
